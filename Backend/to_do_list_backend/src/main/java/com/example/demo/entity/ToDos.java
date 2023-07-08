@@ -37,7 +37,6 @@ public class ToDos {
 	private List<String> task = new ArrayList<>();
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	@MapsId("user_id")
 	@JoinColumn(name = "user_id")
 	private User user;
 	
