@@ -4,10 +4,10 @@ import com.example.demo.entity.Tasks;
 
 public interface TaskService {
 	
-	void addTask(Tasks t);
+	String addTask(Tasks t , Long listId);
 	
-	void editTask(Long id, String newTask);
+	String editTask(Long id, String newTask);
 	
-	void deleteTask(Long id);
+	String deleteTask(Long id);
 
 }
