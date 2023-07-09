@@ -1,22 +1,30 @@
 package com.example.demo.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.example.demo.entity.ToDos;
+import com.example.demo.entity.User;
 import com.example.demo.exception.ListIdNotFoundException;
 import com.example.demo.repository.ListRepo;
 
 public class ListServiceImpl implements ListService{
 	
 	@Autowired
-	ListRepo rep;
+	private ListRepo rep;
 	
 	@Autowired
-	ToDos todo;
+	private ToDos todo;
+	
+	@Autowired
+	private User user;
 
 	@Override
-	public void addList(ToDos toDoList) {
+	public void addList(ToDos toDoList, Long userId) {
 		rep.save(toDoList);
+//		List<ToDos> updatedList = 
+//		user.getToDos();
 	}
 
 	@Override
@@ -31,27 +39,15 @@ public class ListServiceImpl implements ListService{
 
 	@Override
 	public void deleteList(Long id) {
-		// TODO Auto-generated method stub
+		if(rep.existsById(id)) {
+			rep.deleteById(id);
+		}
+		else {
+			throw new ListIdNotFoundException("To Do List not exists!");
+		}
 		
 	}
 
-	@Override
-	public void addTask(Long id) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void editTask(Long id) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void deleteTask(Long id) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	
 
