@@ -21,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Slf4j
-public class JwtRequestFilter extends OncePerRequestFilter{
+public class JWTRequestFilter extends OncePerRequestFilter{
 	
 	
 	@Autowired

@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.example.demo.entity.User;
 
+@SuppressWarnings("serial")
 public class CustomUserDetails implements UserDetails {
 	
 	public User user;
