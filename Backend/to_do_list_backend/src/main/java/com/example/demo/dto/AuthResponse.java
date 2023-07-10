@@ -1,5 +1,7 @@
 package com.example.demo.dto;
 
+import com.example.demo.entity.Role;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,6 +22,8 @@ public class AuthResponse {
 	private String lastName;
 	
 	private String email;
+	
+	private Role role;
 	
 	private String token;
 
