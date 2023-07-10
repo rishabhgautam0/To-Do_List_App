@@ -1,57 +1,58 @@
 package com.example.demo.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.entity.ToDos;
 import com.example.demo.exception.ListIdNotFoundException;
 import com.example.demo.repository.ListRepo;
 
+@Service
+@Transactional
 public class ListServiceImpl implements ListService{
 	
 	@Autowired
-	ListRepo rep;
+	private ListRepo listRep;
 	
-	@Autowired
-	ToDos todo;
+	@Override
+	public List<ToDos> findAllToDos(){
+		return listRep.findAll();
+	}	
 
 	@Override
-	public void addList(ToDos toDoList) {
-		rep.save(toDoList);
+	public String addList(ToDos toDoList, Long userId) {
+		listRep.save(toDoList);
+//		List<ToDos> updatedList = user.getToDos();
+//		updatedList.add(toDoList);
+//		user = userRep.getById(userId);
+//		user.setToDos(updatedList);
+		return "Success!";
 	}
 
 	@Override
-	public void editList(Long id, String newToDo) {
-		if(rep.existsById(id)) {
+	public String editList(Long id, String newToDo) {
+			ToDos todo = listRep.findById(id).orElseThrow(() -> new ListIdNotFoundException("List not found!"));
 			todo.setToDoList(newToDo);
+			return "Success!";
+	}
+
+	@Override
+	public String deleteList(Long id) {
+		if(listRep.existsById(id)) {
+			listRep.deleteById(id);
+			return "Success!";
 		}
 		else {
 			throw new ListIdNotFoundException("To Do List not exists!");
 		}
-	}
-
-	@Override
-	public void deleteList(Long id) {
-		// TODO Auto-generated method stub
 		
 	}
+	
 
-	@Override
-	public void addTask(Long id) {
-		// TODO Auto-generated method stub
-		
-	}
 
-	@Override
-	public void editTask(Long id) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void deleteTask(Long id) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	
 

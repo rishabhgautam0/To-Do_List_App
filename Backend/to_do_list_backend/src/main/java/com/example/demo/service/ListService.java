@@ -1,19 +1,18 @@
 package com.example.demo.service;
 
+import java.util.List;
+
 import com.example.demo.entity.ToDos;
 
 public interface ListService {
 	
-	void addList(ToDos toDoList);
+	String addList(ToDos toDoList, Long userId);
 	
-	void editList(Long id, String newToDo);
+	String editList(Long id, String newToDo);
 	
-	void deleteList(Long id);
+	String deleteList(Long id);
 	
-	void addTask(Long id);
+	List<ToDos> findAllToDos();
 	
-	void editTask(Long id);
-	
-	void deleteTask(Long id);
 
 }
