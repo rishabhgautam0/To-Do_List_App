@@ -4,6 +4,9 @@ import { Role } from "./models/role";
 import Home from './pages/Home';
 import Profile from './pages/Profile';
 import Background from "./components/Background";
+import Login from "./components/Login";
+import Signup from "./components/Signup";
+import AddList from "./pages/AddList";
 
 
 function App() {
@@ -21,6 +24,9 @@ function App() {
             </AuthGuard>
           }
         ></Route>
+        <Route path="/login" element={<Login />}></Route>
+        <Route path="/signup" element={<Signup />}></Route>
+        <Route path="/list/add-list" element={<AddList />}></Route>
       </Routes>
     </div>
   );

@@ -31,8 +31,11 @@ public class Tasks {
 	@Column(name = "task_id")
 	private Long taskId;
 	
-	@Column(name = "")
+	
 	private String task;
+	
+	@Column(name = "task_marked")
+	private boolean taskMarked;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "to_do_list_id")

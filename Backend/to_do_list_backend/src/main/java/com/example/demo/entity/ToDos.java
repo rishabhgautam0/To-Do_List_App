@@ -40,6 +40,9 @@ public class ToDos {
 	@Column(name = "to_do_list")
 	private String toDoList;
 	
+	@Column(name = "list_marked")
+	private boolean listMarked;
+	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id")
 	private User user;

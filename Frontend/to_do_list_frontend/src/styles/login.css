@@ -1,0 +1,24 @@
+.heading{
+  margin: 30px 0 20px 0;
+  color: black;
+  text-align: center;
+}
+.container{
+  font-family: 'Times New Roman', Times, serif;
+  align-items: center;
+  margin: auto;
+}
+.custom-card {
+  margin: auto;
+  width: 350px;
+  max-width: 100%;
+  background-color: #eee !important;
+  align-self: center;
+}
+
+.user-icon {
+  align-self: center;
+  font-size: 80px;
+  color: lightskyblue;
+  margin-bottom: 1rem;
+}
