@@ -20,17 +20,17 @@ public class TaskController {
 	@Autowired
 	private TaskService taskService;
 	
-	@PostMapping("/add-list")
+	@PostMapping("/add-task")
 	ResponseEntity<?> addNewList(@RequestParam Long id, @RequestBody Tasks tasks){
 		return new ResponseEntity<>(taskService.addTask(tasks, id), HttpStatus.CREATED);
 	}
 	
-	@PostMapping("/update-list")
+	@PostMapping("/update-task")
 	ResponseEntity<?> updateList(@RequestParam Long id, @RequestBody String newTask){
 		return new ResponseEntity<>(taskService.editTask(id, newTask), HttpStatus.OK);
 	}
 	
-	@DeleteMapping("/delete-list")
+	@DeleteMapping("/delete-task")
 	ResponseEntity<?> deleteList(@RequestParam Long id){
 		return new ResponseEntity<>(taskService.deleteTask(id), HttpStatus.OK);
 	}
