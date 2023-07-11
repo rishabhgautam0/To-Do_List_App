@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.entity.ToDos;
 import com.example.demo.service.ListService;
 
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @RequestMapping("/list")
 public class ListController {
@@ -24,6 +26,7 @@ public class ListController {
 	
 	@PostMapping("/add-list")
 	ResponseEntity<?> addNewList(@RequestParam Long id, @RequestBody ToDos todos){
+		log.info(todos.getToDoList() + " Marked: " + todos.isListMarked());
 		return new ResponseEntity<>(listService.addList(todos, id), HttpStatus.CREATED);
 	}
 	

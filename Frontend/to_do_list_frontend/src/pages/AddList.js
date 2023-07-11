@@ -8,13 +8,17 @@ import checked from "../asset/images/icon.png";
 import unchecked from "../asset/images/icon.png";
 import Todos from "../models/todos";
 import Tasks from "../models/tasks";
+import TaskService from '../services/TaskService';
 
 const AddList = () => {
   const currentUser = useSelector((state) => state.user);
   const [todolist, setTodolist] = useState(new Todos());
   const [tasks, setTasks] = useState(new Tasks());
+  const [errorMessage, setErrorMessage] = useState("");
   const listContainer = document.getElementById("list-container");
   const inputTask = document.getElementById("input-task");
+
+  const navigate = useNavigate();
 
   const handleListChange = (e) => {
     const { name, value } = e.target;
@@ -25,14 +29,37 @@ const AddList = () => {
     });
   }
 
+  const handleTaskChange = (e) => {
+    const { name, value } = e.target;
+    console.log(currentUser);
+
+    setTasks((prevState) => {
+      return { ...prevState, [name]: value };
+    });
+  }
+
   const addNewList = () => {
-    listService.saveList(todolist, currentUser?.userId);
+    listService.saveList(todolist, currentUser?.userId)
+    .then((_) => {
+      navigate("/profile");
+      console.log(todolist);
+    })
+    .catch((error) =>{
+      console.log(error);
+      if(error?.response?.status === 409){
+          setErrorMessage("To Do List already exists");
+      }else{
+          
+          setErrorMessage("Unexpected error occured");
+      }
+  });
   }
 
   const handleTask = () => {
     let newTask = document.createElement('li');
     newTask.innerHTML = inputTask.value;
     listContainer.appendChild(newTask);
+    TaskService.saveTask(tasks, todolist.toDoListId);
   }
 
 
@@ -44,12 +71,12 @@ const AddList = () => {
           <img src={icon}></img>
         </h2>
         <div className='add-list'>
-          <input type='text' id='input-list' onChange={(e) => handleListChange(e)}></input>
+          <input type='text' id='input-list' name='toDoList' value={todolist.toDoList} onChange={(e) => handleListChange(e)}></input>
 
         </div>
         <h2>Add Tasks</h2>
         <div className='add-task'>
-          <input type='text' id='input-task'></input>
+          <input type='text' id='input-task' name='task' value={tasks.task} onChange={(e) => handleTaskChange(e)}></input>
           <button className='task-button' onClick={handleTask}>Add</button>
         </div>
         <ul id='list-container'>

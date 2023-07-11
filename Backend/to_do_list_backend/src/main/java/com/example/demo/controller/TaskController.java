@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.entity.Tasks;
 import com.example.demo.service.TaskService;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestController
 @RequestMapping("/list/task")
 public class TaskController {
@@ -22,6 +25,7 @@ public class TaskController {
 	
 	@PostMapping("/add-task")
 	ResponseEntity<?> addNewList(@RequestParam Long id, @RequestBody Tasks tasks){
+		log.info(tasks.getTask() + "Marked: " + tasks.isTaskMarked());
 		return new ResponseEntity<>(taskService.addTask(tasks, id), HttpStatus.CREATED);
 	}
 	
