@@ -9,14 +9,21 @@ import unchecked from "../asset/images/icon.png";
 import Todos from "../models/todos";
 import Tasks from "../models/tasks";
 import TaskService from '../services/TaskService';
+import TodoDto from "../models/todoDto";
 
 const AddList = () => {
   const currentUser = useSelector((state) => state.user);
   const [todolist, setTodolist] = useState(new Todos());
-  const [tasks, setTasks] = useState(new Tasks());
+  const [todoDto, setTodoDto] = useState(new TodoDto);
+  const [tasks, setTasks] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const listContainer = document.getElementById("list-container");
   const inputTask = document.getElementById("input-task");
+
+  const tasksList = [
+    { description: 'Task 1' },
+    { description: 'Task 2' },
+  ];
 
   const navigate = useNavigate();
 
@@ -39,7 +46,9 @@ const AddList = () => {
   }
 
   const addNewList = () => {
-    listService.saveList(todolist, currentUser?.userId)
+
+    setTodoDto(new TodoDto(todolist.getTitle(),tasks));
+    listService.saveList(todoDto, currentUser?.userId)
     .then((_) => {
       navigate("/profile");
       console.log(todolist);
@@ -56,24 +65,24 @@ const AddList = () => {
   });
   }
 
-  const handleTask = () => {
-    let newTask = document.createElement('li');
-    newTask.innerHTML = inputTask.value;
-    listContainer.appendChild(newTask);
-    TaskService.saveTask(tasks, currentUser?.userId) .then((_) => {
-      console.log("added task");
-    })
-    .catch((error) =>{
-      navigate("/login");
-      console.log(error);
-      if(error?.response?.status === 409){
-          setErrorMessage("Task already exists!");
-      }else{
+  // const handleTask = () => {
+  //   let newTask = document.createElement('li');
+  //   newTask.innerHTML = inputTask.value;
+  //   listContainer.appendChild(newTask);
+  //   TaskService.saveTask(tasks, currentUser?.userId) .then((_) => {
+  //     console.log("added task");
+  //   })
+  //   .catch((error) =>{
+  //     navigate("/login");
+  //     console.log(error);
+  //     if(error?.response?.status === 409){
+  //         setErrorMessage("Task already exists!");
+  //     }else{
           
-          setErrorMessage("Unexpected error occured!");
-      }
-  });
-  }
+  //         setErrorMessage("Unexpected error occured!");
+  //     }
+  // });
+  // }
 
 
   return (
@@ -90,7 +99,7 @@ const AddList = () => {
         <h2>Add Tasks</h2>
         <div className='add-task'>
           <input type='text' id='input-task' name='task' value={tasks.task} onChange={(e) => handleTaskChange(e)}></input>
-          <button className='task-button' onClick={handleTask}>Add</button>
+          <button className='task-button' onClick={(e) => handleTaskChange(e)}>Add</button>
         </div>
         <ul id='list-container'>
           {/* <li>task1</li>

@@ -8,4 +8,8 @@ export default class ToDos {
         this.toDoList = toDoList;
         this.listMarked = listMarked;
     }
+     getTitle(){
+        return this.toDoList;
+
+    }
 }

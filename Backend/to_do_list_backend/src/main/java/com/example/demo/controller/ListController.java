@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.entity.ToDos;
+import com.example.demo.dto.TodoDTO;
 import com.example.demo.service.ListService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +36,7 @@ public class ListController {
 	}
 	
 	@PostMapping("/add-list")
-	ResponseEntity<?> addNewList(@RequestParam Long id, @RequestBody ToDos todos){
+	ResponseEntity<?> addNewList(@RequestParam Long id, @RequestBody TodoDTO todoDto){
 		log.info(todos.getToDoList() + " Marked: " + todos.isListMarked());
 		return new ResponseEntity<>(listService.addList(todos, id), HttpStatus.CREATED);
 	}
