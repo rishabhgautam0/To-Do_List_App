@@ -53,5 +53,8 @@ public class ToDos {
 			orphanRemoval = true,fetch = FetchType.EAGER)
 	private List<Tasks> tasksList = new ArrayList<>();
 	
+	public void addUser(User userObj) {
+		user.setUserId(userObj.getUserId());
+	}
 	
 }

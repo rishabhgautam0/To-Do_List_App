@@ -1,11 +1,5 @@
 package com.example.demo.entity;
 
-import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -40,5 +34,9 @@ public class Tasks {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "to_do_list_id")
 	private ToDos toDos;
+	
+	public void addTodo(ToDos t) {
+		toDos.setToDoListId(t.getToDoListId());
+	}
 
 }

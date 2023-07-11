@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,16 @@ public class TaskController {
 
 	@Autowired
 	private TaskService taskService;
+	
+	@GetMapping("all-tasks")
+	ResponseEntity<?> getAllTasks(){
+		return new ResponseEntity<>(taskService.findAllTasks(), HttpStatus.OK);
+	}
+	
+	@GetMapping("tasks-by-id")
+	ResponseEntity<?> getTasksById(@RequestParam Long id){
+		return new ResponseEntity<>(taskService.findTasksById(id), HttpStatus.OK);
+	}
 	
 	@PostMapping("/add-task")
 	ResponseEntity<?> addNewList(@RequestParam Long id, @RequestBody Tasks tasks){

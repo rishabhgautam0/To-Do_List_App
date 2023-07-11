@@ -7,8 +7,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.entity.ToDos;
+import com.example.demo.entity.User;
 import com.example.demo.exception.ListIdNotFoundException;
+import com.example.demo.exception.UserNotFoundException;
 import com.example.demo.repository.ListRepo;
+import com.example.demo.repository.UserRepo;
 
 @Service
 @Transactional
@@ -17,18 +20,29 @@ public class ListServiceImpl implements ListService{
 	@Autowired
 	private ListRepo listRep;
 	
+	@Autowired
+	private UserRepo userRep;
+	
 	@Override
 	public List<ToDos> findAllToDos(){
 		return listRep.findAll();
 	}	
+	
+	@Override
+	public List<ToDos> findAllToDosById(Long userId) {
+		return userRep.findByUserId(userId);
+	}
 
 	@Override
 	public String addList(ToDos toDoList, Long userId) {
+		User user = userRep.findById(userId).orElseThrow(() -> new UserNotFoundException("User not found!"));
+		toDoList.setUser(user);
 		listRep.save(toDoList);
-//		List<ToDos> updatedList = user.getToDos();
-//		updatedList.add(toDoList);
-//		user = userRep.getById(userId);
-//		user.setToDos(updatedList);
+	
+		user.getToDos().add(toDoList);
+		userRep.save(user);
+		System.out.println(user.getToDos().toString());
+
 		return "Success!";
 	}
 
@@ -50,6 +64,10 @@ public class ListServiceImpl implements ListService{
 		}
 		
 	}
+
+
+
+	
 	
 
 

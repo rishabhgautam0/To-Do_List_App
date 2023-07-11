@@ -7,11 +7,15 @@ const API_URL = BASE_API_URL + "/list";
 class listService{
     saveList(list,id){
         console.log(id);
-        return axios.post(API_URL + `/add-list?id=${id}`, list,)
+        return axios.post(API_URL + `/add-list?id=${id}`, list,);
     }
 
     getAllList(){
-        return axios.get(API_URL + `/todos`)
+        return axios.get(API_URL + `/todos`);
+    }
+
+    getTodosById(id){
+        return axios.get(API_URL + `/todos-by-id?id=${id}`);
     }
 }
 

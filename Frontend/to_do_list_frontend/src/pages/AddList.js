@@ -45,6 +45,7 @@ const AddList = () => {
       console.log(todolist);
     })
     .catch((error) =>{
+      navigate("/login");
       console.log(error);
       if(error?.response?.status === 409){
           setErrorMessage("To Do List already exists");
@@ -59,7 +60,19 @@ const AddList = () => {
     let newTask = document.createElement('li');
     newTask.innerHTML = inputTask.value;
     listContainer.appendChild(newTask);
-    TaskService.saveTask(tasks, todolist.toDoListId);
+    TaskService.saveTask(tasks, currentUser?.userId) .then((_) => {
+      console.log("added task");
+    })
+    .catch((error) =>{
+      navigate("/login");
+      console.log(error);
+      if(error?.response?.status === 409){
+          setErrorMessage("Task already exists!");
+      }else{
+          
+          setErrorMessage("Unexpected error occured!");
+      }
+  });
   }
 
 

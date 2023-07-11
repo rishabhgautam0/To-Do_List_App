@@ -24,6 +24,17 @@ public class ListController {
 	@Autowired
 	private ListService listService;
 	
+	
+	@GetMapping("/todos")
+	ResponseEntity<?> getAllToDos(){
+		return new ResponseEntity<>(listService.findAllToDos(), HttpStatus.OK);
+	}
+	
+	@GetMapping("/todos-by-id")
+	ResponseEntity<?> getAllToDosById(@RequestParam Long id){
+		return new ResponseEntity<>(listService.findAllToDosById(id), HttpStatus.OK);
+	}
+	
 	@PostMapping("/add-list")
 	ResponseEntity<?> addNewList(@RequestParam Long id, @RequestBody ToDos todos){
 		log.info(todos.getToDoList() + " Marked: " + todos.isListMarked());
@@ -39,10 +50,5 @@ public class ListController {
 	ResponseEntity<?> deleteList(@RequestParam Long id){
 		return new ResponseEntity<>(listService.deleteList(id), HttpStatus.OK);
 	}
-	
-	@GetMapping("/todos")
-	ResponseEntity<?> getAllToDos(){
-		return new ResponseEntity<>(listService.findAllToDos(), HttpStatus.OK);
-	}
-	
+
 }
