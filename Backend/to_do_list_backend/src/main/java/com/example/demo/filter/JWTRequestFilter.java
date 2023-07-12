@@ -34,12 +34,12 @@ public class JWTRequestFilter extends OncePerRequestFilter{
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		
-		String header1 = request.getRequestURI();
-		Enumeration<String> reqBody = request.getHeaderNames();
-		while (reqBody.hasMoreElements()) {
-		    String param = reqBody.nextElement();
-		    log.info(param);
-		}
+//		String header1 = request.getRequestURI();
+//		Enumeration<String> reqBody = request.getHeaderNames();
+//		while (reqBody.hasMoreElements()) {
+//		    String param = reqBody.nextElement();
+//		    log.info(param);
+//		}
 		String header = request.getHeader("authorization");
 		log.info(header);
 		if (header != null && header.startsWith("Bearer ")) {

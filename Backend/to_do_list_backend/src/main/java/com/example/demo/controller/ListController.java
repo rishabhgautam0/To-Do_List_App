@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.entity.ToDos;
+import com.example.demo.dto.TodoDTO;
 import com.example.demo.service.ListService;
 
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @RequestMapping("/list")
 public class ListController {
@@ -22,9 +24,21 @@ public class ListController {
 	@Autowired
 	private ListService listService;
 	
+	
+	@GetMapping("/todos")
+	ResponseEntity<?> getAllToDos(){
+		return new ResponseEntity<>(listService.findAllToDos(), HttpStatus.OK);
+	}
+	
+	@GetMapping("/todos-by-id")
+	ResponseEntity<?> getAllToDosById(@RequestParam Long id){
+		return new ResponseEntity<>(listService.findAllToDosById(id), HttpStatus.OK);
+	}
+	
 	@PostMapping("/add-list")
-	ResponseEntity<?> addNewList(@RequestParam Long id, @RequestBody ToDos todos){
-		return new ResponseEntity<>(listService.addList(todos, id), HttpStatus.CREATED);
+	ResponseEntity<?> addNewList(@RequestParam Long id, @RequestBody TodoDTO todoDto){
+		log.info(todoDto.getTitle() + " Task List: " + todoDto.getTasks() + "UserId" + id);
+		return new ResponseEntity<>(listService.addList(todoDto, id), HttpStatus.CREATED);
 	}
 	
 	@PostMapping("/update-list")
@@ -36,10 +50,5 @@ public class ListController {
 	ResponseEntity<?> deleteList(@RequestParam Long id){
 		return new ResponseEntity<>(listService.deleteList(id), HttpStatus.OK);
 	}
-	
-	@GetMapping("/todos")
-	ResponseEntity<?> getAllToDos(){
-		return new ResponseEntity<>(listService.findAllToDos(), HttpStatus.OK);
-	}
-	
+
 }

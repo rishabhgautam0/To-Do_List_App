@@ -46,9 +46,7 @@ public class WebSecurityConfig {
 		})
 		.and()
 		.authorizeRequests()
-		.requestMatchers("/auth/**", "/postman*/**", "/v*/api-docs/**").permitAll()
-		.requestMatchers(HttpMethod.OPTIONS).permitAll().
-		
+		.requestMatchers("/auth/**", "/postman*/**", "/v*/api-docs/**").permitAll().
 		
 		anyRequest().authenticated()
 		.and()

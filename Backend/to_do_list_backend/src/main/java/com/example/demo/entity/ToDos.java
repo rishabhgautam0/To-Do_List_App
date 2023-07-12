@@ -40,6 +40,9 @@ public class ToDos {
 	@Column(name = "to_do_list")
 	private String toDoList;
 	
+	@Column(name = "list_marked")
+	private boolean listMarked;
+	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id")
 	private User user;
@@ -50,5 +53,8 @@ public class ToDos {
 			orphanRemoval = true,fetch = FetchType.EAGER)
 	private List<Tasks> tasksList = new ArrayList<>();
 	
+	public void addUser(User userObj) {
+		user.setUserId(userObj.getUserId());
+	}
 	
 }
