@@ -17,5 +17,5 @@ public interface ListService {
 	
 	List<ToDos> findAllToDosById(Long id);
 	
-
+	List<TodoDTO> findAllTodoTask(Long id);
 }
