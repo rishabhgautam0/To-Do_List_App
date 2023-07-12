@@ -20,6 +20,8 @@ import lombok.Setter;
 @Setter
 public class Tasks {
 	
+	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "task_id")
@@ -37,6 +39,10 @@ public class Tasks {
 	
 	public void addTodo(ToDos t) {
 		toDos.setToDoListId(t.getToDoListId());
+	}
+	@Override
+	public String toString() {
+		return "Tasks [taskId=" + taskId + ", task=" + task + ", taskMarked=" + taskMarked + ", toDos=" + toDos + "]";
 	}
 
 }

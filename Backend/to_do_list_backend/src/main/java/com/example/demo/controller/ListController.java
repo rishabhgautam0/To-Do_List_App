@@ -37,8 +37,8 @@ public class ListController {
 	
 	@PostMapping("/add-list")
 	ResponseEntity<?> addNewList(@RequestParam Long id, @RequestBody TodoDTO todoDto){
-		log.info(todos.getToDoList() + " Marked: " + todos.isListMarked());
-		return new ResponseEntity<>(listService.addList(todos, id), HttpStatus.CREATED);
+		log.info(todoDto.getTitle() + " Task List: " + todoDto.getTaskList() + "UserId" + id);
+		return new ResponseEntity<>(listService.addList(todoDto, id), HttpStatus.CREATED);
 	}
 	
 	@PostMapping("/update-list")

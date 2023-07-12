@@ -14,44 +14,58 @@ import TodoDto from "../models/todoDto";
 const AddList = () => {
   const currentUser = useSelector((state) => state.user);
   const [todolist, setTodolist] = useState(new Todos());
-  const [todoDto, setTodoDto] = useState(new TodoDto);
+  const [todoDto, setTodoDto] = useState(new TodoDto());
   const [tasks, setTasks] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const listContainer = document.getElementById("list-container");
-  const inputTask = document.getElementById("input-task");
+  // const inputTask = document.getElementById("input-task");
 
-  const tasksList = [
-    { description: 'Task 1' },
-    { description: 'Task 2' },
-  ];
+  // const tasksList = [
+  //   { description: 'Task 1' },
+  //   { description: 'Task 2' },
+  // ];
 
   const navigate = useNavigate();
 
   const handleListChange = (e) => {
     const { name, value } = e.target;
-    console.log(currentUser);
 
-    setTodolist((prevState) => {
+
+    setTodoDto((prevState) => {
       return { ...prevState, [name]: value };
     });
+    console.log(todoDto);
   }
 
   const handleTaskChange = (e) => {
-    const { name, value } = e.target;
-    console.log(currentUser);
 
-    setTasks((prevState) => {
-      return { ...prevState, [name]: value };
-    });
+    
+
+    const name = document.getElementById("input-task").value;
+    const newTask = new Tasks(null,name,null);
+    setTasks(prevTaskList => [...prevTaskList,newTask]);
+    // const { name, value } = e.target;
+    // setTasks((prevState) => {
+    //   return { ...prevState, [name]: value };
+    // });
+    console.log(tasks);
+    let list = document.createElement('li');
+    list.innerHTML = newTask.task;
+    listContainer.appendChild(list);
+
+    
   }
 
-  const addNewList = () => {
+  const addNewList = (e) => {
 
-    setTodoDto(new TodoDto(todolist.getTitle(),tasks));
+    e.preventDefault();
+
+    setTodoDto(new TodoDto(todoDto.title,tasks));
+    console.log(todoDto);
     listService.saveList(todoDto, currentUser?.userId)
     .then((_) => {
       navigate("/profile");
-      console.log(todolist);
+      console.log(todoDto.title, todoDto.tasks);
     })
     .catch((error) =>{
       navigate("/login");
@@ -93,19 +107,19 @@ const AddList = () => {
           <img src={icon}></img>
         </h2>
         <div className='add-list'>
-          <input type='text' id='input-list' name='toDoList' value={todolist.toDoList} onChange={(e) => handleListChange(e)}></input>
+          <input type='text' id='input-list' name='title' value={todoDto.title} onChange={(e) => handleListChange(e)}></input>
 
         </div>
         <h2>Add Tasks</h2>
         <div className='add-task'>
-          <input type='text' id='input-task' name='task' value={tasks.task} onChange={(e) => handleTaskChange(e)}></input>
+          <input type='text' id='input-task' name='tasks' value={todoDto.tasks} />
           <button className='task-button' onClick={(e) => handleTaskChange(e)}>Add</button>
         </div>
         <ul id='list-container'>
           {/* <li>task1</li>
           <li>task2</li> */}
         </ul>
-        <button className='btn' onClick={addNewList}>Save</button>
+        <button className='btn' onClick={(e) => addNewList(e)}>Save</button>
       </div>
     </div>
   )
