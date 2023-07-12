@@ -6,7 +6,7 @@ const API_URL = BASE_API_URL + "/list";
 
 class listService{
     saveList(list,id){
-        console.log(id);
+        console.log(id + " " + list);
         return axios.post(API_URL + `/add-list?id=${id}`, list,);
     }
 

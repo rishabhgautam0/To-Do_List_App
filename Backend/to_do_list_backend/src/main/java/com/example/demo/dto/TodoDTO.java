@@ -20,10 +20,10 @@ import lombok.Setter;
 @Setter
 public class TodoDTO {
 	
-	private long id;
+	
 	
 	private String title;
 	
-	private List<Tasks> taskList;
+	private List<Tasks> tasks;
 
 }

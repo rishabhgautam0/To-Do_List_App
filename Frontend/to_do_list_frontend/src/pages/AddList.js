@@ -28,6 +28,7 @@ const AddList = () => {
   const navigate = useNavigate();
 
   const handleListChange = (e) => {
+
     const { name, value } = e.target;
 
 
@@ -43,12 +44,20 @@ const AddList = () => {
 
     const name = document.getElementById("input-task").value;
     const newTask = new Tasks(null,name,null);
-    setTasks(prevTaskList => [...prevTaskList,newTask]);
+    // setTasks(prevTaskList => [...prevTaskList,newTask]);
     // const { name, value } = e.target;
     // setTasks((prevState) => {
     //   return { ...prevState, [name]: value };
     // });
-    console.log(tasks);
+    // setMyObject((prevState) => ({
+    //   ...prevState,
+    //   myArray: [...prevState.myArray, newString],
+    // }));
+   setTodoDto((prevState) => ({
+    ...prevState,
+    tasks: [...prevState.tasks,newTask],
+   }));
+    console.log(todoDto.tasks);
     let list = document.createElement('li');
     list.innerHTML = newTask.task;
     listContainer.appendChild(list);
@@ -60,7 +69,7 @@ const AddList = () => {
 
     e.preventDefault();
 
-    setTodoDto(new TodoDto(todoDto.title,tasks));
+    // setTodoDto(new TodoDto(todoDto.title,tasks));
     console.log(todoDto);
     listService.saveList(todoDto, currentUser?.userId)
     .then((_) => {
@@ -112,7 +121,7 @@ const AddList = () => {
         </div>
         <h2>Add Tasks</h2>
         <div className='add-task'>
-          <input type='text' id='input-task' name='tasks' value={todoDto.tasks} />
+          <input type='text' id='input-task' name='tasks' />
           <button className='task-button' onClick={(e) => handleTaskChange(e)}>Add</button>
         </div>
         <ul id='list-container'>

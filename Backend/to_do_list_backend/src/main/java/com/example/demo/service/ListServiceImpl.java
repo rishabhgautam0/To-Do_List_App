@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,12 +48,13 @@ public class ListServiceImpl implements ListService{
 		todos.setToDoList(toDoObj.getTitle());
 		todos.setUser(user);
 		List<Tasks> tasks = new ArrayList<>();
-        if (toDoObj.getTaskList() != null) {
-            for (Tasks task : toDoObj.getTaskList()) {
+        if (toDoObj.getTasks() != null) {
+            for (Tasks task : toDoObj.getTasks()) {
 //                Task task = new Task();
 //                task.setDescription(taskDTO.getDescription());
 //                task.setTodo(todo);
             	System.out.println(task);
+            	task.setToDos(todos);
             	task.addTodo(todos);
             	taskRep.save(task);
                 tasks.add(task);
@@ -87,12 +89,21 @@ public class ListServiceImpl implements ListService{
 	@Override
 	public String deleteList(Long id) {
 		if(listRep.existsById(id)) {
+			System.out.println("inside deletelist and todo exitsts");
 			listRep.deleteById(id);
 			return "Success!";
 		}
 		else {
 			throw new ListIdNotFoundException("To Do List not exists!");
 		}
+//		Optional<ToDos> todoOpt = listRep.findById(id);
+//		if(todoOpt.isPresent()) {
+//			ToDos todo = todoOpt.get();
+//			listRep.delete(todo);
+//			return "success";
+//		}
+//		return "failed";
+		
 		
 	}
 
