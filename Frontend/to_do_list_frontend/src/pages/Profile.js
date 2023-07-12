@@ -9,10 +9,12 @@ import "../styles/AddListStyle.css";
 
 const Profile = () => {
 
-  const [todoDto, setTodoDto] = useState([]);
+  const [todoDto, setTodoDto] = useState(["",[]]);
+  const [taskObj, setTaskObj] = useState( new Tasks);
   const [todoList, setTodoList] = useState([]);
   const [taskList, setTaskList] = useState([]);
   const [tasksById, setTasksById] = useState([]);
+  var taskArray = [];
   // const [tasks, setTasks] = useState(new Tasks());
   const [errorMessage, setErrorMessage] = useState("");
   const [infoMessage, setInfoMessage] = useState("")
@@ -35,21 +37,29 @@ const Profile = () => {
     //   setTodoList(response.data,[taskList]);
     //   console.log("Todo List Fetched are: ", response.data);
     // });
-    listService.getTodoDtoById(currentUser?.userId).then((response) => {
-      setTodoDto(response.data);
-      console.log("ToDTO Response"+todoDto+ " and " +todoDto.tasks);
-      console.log("Response from TodoDto: " + response.data);
-    })
+    fetchDto();
 
   }, []);
 
-
-  const showtasks = async (id) => {
-    const divArea = document.getElementById("task-list");
-    setTasksById = await TaskService.getTasksById(id);
-    console.log("Tasks By id : " + tasksById);
-
+  const fetchDto = async () => {
+    try{
+      const response = await listService.getTodoDtoById(currentUser?.userId).then((response) => {
+        setTodoDto(response.data);
+        console.log("ToDTO title: "+ todoDto.title + " and tododto task: " +todoDto.tasks);
+        console.log("Response Data from TodoDto: " + response);
+      })
+    } catch(error){
+      console.error("Error fetching data", error)
+    }
   }
+
+
+  // const showtasks = async (id) => {
+  //   const divArea = document.getElementById("task-list");
+  //   setTasksById = await TaskService.getTasksById(id);
+  //   console.log("Tasks By id : " + tasksById);
+
+  // }
 
   // const handleTaskChange = (e) => {
   //   const { name, value } = e.target;
@@ -83,13 +93,13 @@ const Profile = () => {
 
     <div>
       <Header />
-      Profile
+      
       <div>
         {todoDto.length === 0 ? (
           <h2 className="text-center">There are no To Do's</h2>
         ) : (
           <div className="container mx-5 my-3">
-            <h2>Lists of Travels are as follows:</h2>
+            <h2>Lists of To Do's are:</h2>
 
             {errorMessage && (
               <div className="alert alert-danger">{errorMessage}</div>
@@ -99,46 +109,23 @@ const Profile = () => {
               <div className="alert alert-success">{infoMessage}</div>
 
             )}
-            <div className='card'>
+            <div >
               {todoDto.map((item,ind) => (
-                <div key={item.id}>
-                  <div>
+                <div key={ind}>
+                  <div className='card'>
                     To do: {item.title}
+                    {console.log(item)}
+                    <div>
                     Tasks: <ul>
-                    {item.tasks.map((item2, ind2) => {
-                      <li key={item2.id}>check{item2}</li>
-                    })}
-                      </ul> 
-                    {/* taskList: {item.tasksList.map((item2,ind2) => {
-                      <div key={item.id}>
-                        tasks: {item2.task}
-                      </div>
+                    {/* {item.tasks.map((item2, taskId) => {
+                    //  {console.log(task)}
+                      <li key={taskId}>check{item2.task}</li>
                     })} */}
+                      </ul> 
+                    </div>
+                    
                   </div>
-                  {/* <div>Tasks</div> */}
-                  {/* <div>
-                    {
-                      TaskService.getTasksById(item.id).then((response) => {
-                        setTaskList(response.data);
-                        console.log(taskList);
-                      })
-                    }
-                  </div>
-                  <div>
-                    {taskList.map((taskItem, inx) => (
-                      <div key={taskItem.taskId}>
-                        Task: {taskItem.task}
-                      </div>
-                    ))}
-                  </div> */}
-                  {/* <div id='task-list'>
-                    { taskList.map((item2,ind2) => (
-                      <div key={item2.id}>
-                        Task: {item2.task}
-                        
-                      </div>
-                    ))}
-                  </div> */}
+                  
                 </div>
               ))}
 

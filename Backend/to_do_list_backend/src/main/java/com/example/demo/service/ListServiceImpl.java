@@ -54,7 +54,9 @@ public class ListServiceImpl implements ListService{
 			tod.setTitle(t.getToDoList());
 			tod.setTasks(taskList);
 			listToDoDto.add(tod);
+			System.out.println("Title in tod:"+ tod.getTitle() + "task in tdodto: "+ tod.getTasks().size());
 		}
+		System.out.println("ToDTO object is:" + listToDoDto.size());
 		return listToDoDto;
 	}
 
