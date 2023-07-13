@@ -5,15 +5,13 @@ import Header from '../components/Header';
 import listService from "../services/listService";
 import TaskService from '../services/TaskService';
 import Tasks from "../models/tasks";
-import "../styles/AddListStyle.css";
+import "../styles/ProfileStyle.css";
+import { FiEdit3 } from "react-icons/fi";
+import { MdDeleteForever } from "react-icons/md";
 
 const Profile = () => {
 
-  const [todoDto, setTodoDto] = useState(["",[]]);
-  const [taskObj, setTaskObj] = useState( new Tasks);
-  const [todoList, setTodoList] = useState([]);
-  const [taskList, setTaskList] = useState([]);
-  const [tasksById, setTasksById] = useState([]);
+  const [todoDto, setTodoDto] = useState(["", []]);
   var taskArray = [];
   // const [tasks, setTasks] = useState(new Tasks());
   const [errorMessage, setErrorMessage] = useState("");
@@ -28,72 +26,39 @@ const Profile = () => {
 
   useEffect(() => {
     console.log("use effect1");
-    // TaskService.getAllTask()
-    // .then((response) => {
-    //   setTaskList(response.data);
-    //   console.log("Task List feteched are: " + response.data)
-    // });
-    // listService.getTodosById(currentUser?.userId).then((response) => {
-    //   setTodoList(response.data,[taskList]);
-    //   console.log("Todo List Fetched are: ", response.data);
-    // });
+
+    const fetchDto = async () => {
+      try {
+        const response = await listService.getTodoDtoById(currentUser?.userId);
+        const data = await response.data;
+        setTodoDto(data);
+      } catch (error) {
+        console.error("Error fetching data", error)
+      }
+    }
+    
     fetchDto();
 
   }, []);
 
-  const fetchDto = async () => {
-    try{
-      const response = await listService.getTodoDtoById(currentUser?.userId).then((response) => {
-        setTodoDto(response.data);
-        console.log("ToDTO title: "+ todoDto.title + " and tododto task: " +todoDto.tasks);
-        console.log("Response Data from TodoDto: " + response);
-      })
-    } catch(error){
-      console.error("Error fetching data", error)
-    }
-  }
-
-
-  // const showtasks = async (id) => {
-  //   const divArea = document.getElementById("task-list");
-  //   setTasksById = await TaskService.getTasksById(id);
-  //   console.log("Tasks By id : " + tasksById);
-
+  // const fetchDto = async () => {
+  //   try {
+  //     const response = await listService.getTodoDtoById(currentUser?.userId).then((response) => {
+  //       setTodoDto(response.data);
+  //       console.log("ToDTO title: " + todoDto.title + " and tododto task: " + todoDto.tasks);
+  //       console.log("Response Data from TodoDto: " + response);
+  //     })
+  //   } catch (error) {
+  //     console.error("Error fetching data", error)
+  //   }
   // }
 
-  // const handleTaskChange = (e) => {
-  //   const { name, value } = e.target;
-  //   console.log(currentUser);
-
-  //   setTasks((prevState) => {
-  //     return { ...prevState, [name]: value };
-  //   });
-  // }
-
-  // const handleTask = () => {
-  //   let newTask = document.createElement('li');
-  //   newTask.innerHTML = inputTask.value;
-  //   listContainer.appendChild(newTask);
-  //   TaskService.saveTask(tasks, currentUser?.userId).then((_) => {
-  //     console.log("added task");
-  //   })
-  //     .catch((error) => {
-  //       navigate("/login");
-  //       console.log(error);
-  //       if (error?.response?.status === 409) {
-  //         setErrorMessage("Task already exists!");
-  //       } else {
-
-  //         setErrorMessage("Unexpected error occured!");
-  //       }
-  //     });
-  // }
 
   return (
 
     <div>
       <Header />
-      
+
       <div>
         {todoDto.length === 0 ? (
           <h2 className="text-center">There are no To Do's</h2>
@@ -110,22 +75,34 @@ const Profile = () => {
 
             )}
             <div >
-              {todoDto.map((item,ind) => (
-                <div key={ind}>
+              {todoDto.map((item, index) => (
+                <div key={item.id}>
                   <div className='card'>
                     To do: {item.title}
                     {console.log(item)}
-                    <div>
-                    Tasks: <ul>
-                    {/* {item.tasks.map((item2, taskId) => {
-                    //  {console.log(task)}
-                      <li key={taskId}>check{item2.task}</li>
-                    })} */}
-                      </ul> 
-                    </div>
+                    <br></br>
+                    Tasks: 
                     
+                    { item.tasks ?  (
+                      <ul>
+                      {item.tasks.map( (item2, taskId) => (
+                    //  {console.log(item2.taskId)}
+                      <li key={taskId}>{ item2.task }< FiEdit3/>  <MdDeleteForever /></li>
+                    ))}
+                    </ul>
+
+                    )
+
+                      : (
+
+                        <div>No Tasks</div>
+
+                      )
+                    }
+
+
                   </div>
-                  
+
                 </div>
               ))}
 
