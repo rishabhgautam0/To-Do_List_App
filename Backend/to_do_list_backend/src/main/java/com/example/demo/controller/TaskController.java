@@ -47,6 +47,7 @@ public class TaskController {
 	
 	@DeleteMapping("/delete-task")
 	ResponseEntity<?> deleteList(@RequestParam Long id){
+		System.out.println("In delete task controller");
 		return new ResponseEntity<>(taskService.deleteTask(id), HttpStatus.OK);
 	}
 	

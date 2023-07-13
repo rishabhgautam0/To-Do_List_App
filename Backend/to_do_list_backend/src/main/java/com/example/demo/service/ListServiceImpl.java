@@ -51,6 +51,7 @@ public class ListServiceImpl implements ListService{
 		for(ToDos t : listTodos) {
 			List<Tasks> taskList = listRep.findByListId(t.getToDoListId());
 			TodoDTO tod = new TodoDTO();
+			tod.setTodoId(t.getToDoListId());
 			tod.setTitle(t.getToDoList());
 			tod.setTasks(taskList);
 			listToDoDto.add(tod);
@@ -99,8 +100,10 @@ public class ListServiceImpl implements ListService{
 	}
 
 	@Override
-	public String editList(Long id, String newToDo) {
-			ToDos todo = listRep.findById(id).orElseThrow(() -> new ListIdNotFoundException("List not found!"));
+	public String editList(Long todoId, String newToDo) {
+		
+			ToDos todo = listRep.findById(todoId).orElseThrow(() -> new ListIdNotFoundException("List not found!"));
+			System.out.println("Todo id fetched: " + todo.getToDoListId());
 			todo.setToDoList(newToDo);
 			return "Success!";
 	}

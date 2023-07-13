@@ -58,6 +58,7 @@ public class TaskServiceImpl implements TaskService{
 
 	@Override
 	public String deleteTask(Long id) {
+		System.out.println("In delete task service");
 		if(taskRep.existsById(id)) {
 			taskRep.deleteById(id);
 			return "Success!";

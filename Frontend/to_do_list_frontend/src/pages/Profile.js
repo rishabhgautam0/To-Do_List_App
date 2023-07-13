@@ -12,7 +12,8 @@ import { MdDeleteForever } from "react-icons/md";
 const Profile = () => {
 
   const [todoDto, setTodoDto] = useState(["", []]);
-  var taskArray = [];
+  const [newTodo, setNewTodo] = useState([]);
+  const [newTask, setNewTask] = useState([]);
   // const [tasks, setTasks] = useState(new Tasks());
   const [errorMessage, setErrorMessage] = useState("");
   const [infoMessage, setInfoMessage] = useState("")
@@ -32,12 +33,14 @@ const Profile = () => {
         const response = await listService.getTodoDtoById(currentUser?.userId);
         const data = await response.data;
         setTodoDto(data);
+        console.log("todoDto contains: " + todoDto)
       } catch (error) {
         console.error("Error fetching data", error)
       }
     }
-    
+
     fetchDto();
+
 
   }, []);
 
@@ -52,6 +55,52 @@ const Profile = () => {
   //     console.error("Error fetching data", error)
   //   }
   // }
+
+  const showNewTodoInput = () => {
+    document.querySelector(".input-field-todo").style.visibility = "visible";
+  }
+
+  const showNewTaskInput = () => {
+    document.querySelector(".input-field-task").style.visibility = "visible";
+  }
+
+  const handleTodoChange = (e) => {
+    const { name, value } = e.target;
+    setNewTodo((prevState) => {
+      return { ...prevState, [name]: value };
+      // console.log("newTodo :"+newTodo)
+    });
+    console.log(newTodo);
+  }
+  const handleTaskChange = (e) => {
+    const { name, value } = e.target;
+    setNewTask((prevState) => {
+      return { ...prevState, [name]: value };
+    });
+    console.log(newTodo);
+  }
+
+  const editTodo = (e, id) => {
+    e.preventDefault();
+
+    listService.editList(id, newTodo);
+  }
+  const editTask = (e, id) => {
+    e.preventDefault();
+
+    TaskService.editTask(id, newTask);
+  }
+
+  const deleteTodo = (e, id) => {
+    e.preventDefault();
+
+    listService.deleteList(id);
+  }
+  const deleteTask = (e, id) => {
+    e.preventDefault();
+
+    TaskService.deleteTask(id);
+  }
 
 
   return (
@@ -79,17 +128,35 @@ const Profile = () => {
                 <div key={item.id}>
                   <div className='card'>
                     To do: {item.title}
+
+                    {/* {console.log("TodoDto id is: " + item.dtoId)} */}
+
+                    <button className='profile-btn' onClick={showNewTodoInput}>< FiEdit3 /></button>
+                    <button className='profile-btn' onClick={(e) => { deleteTodo(e, item.todoId)} }><MdDeleteForever /></button>
+                    <div className='input-field-todo'>
+                      <input type='text' id='newTodoInput' name='newList' onChange={(e) => handleTodoChange(e)}></input>
+                      <button className='profile-btn' onClick={(e) => editTodo(e, item.todoId)}>Save</button>
+                    </div>
                     {console.log(item)}
                     <br></br>
-                    Tasks: 
-                    
-                    { item.tasks ?  (
+                    Tasks:
+
+                    {item.tasks ? (
                       <ul>
-                      {item.tasks.map( (item2, taskId) => (
-                    //  {console.log(item2.taskId)}
-                      <li key={taskId}>{ item2.task }< FiEdit3/>  <MdDeleteForever /></li>
-                    ))}
-                    </ul>
+                        {item.tasks.map((item2, taskId) => (
+
+                          <li key={taskId}>{item2.task}
+                            {console.log("Task Id is " + item2.taskId)}
+
+                            <button className='profile-btn' onClick={showNewTaskInput}>< FiEdit3 /></button>
+                            <button className='profile-btn' onClick={ (e) => { deleteTask(e, item2.taskId) } }><MdDeleteForever /></button>
+                            <div className='input-field-task'>
+                              <input type='text' id='newTaskInput' name='newTask' onChange={(e) => handleTaskChange(e)}></input>
+                              <button className='profile-btn' onClick={(e) => editTask(e, item.taskId)}>Save</button>
+                            </div>
+                          </li>
+                        ))}
+                      </ul>
 
                     )
 

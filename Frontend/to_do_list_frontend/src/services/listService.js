@@ -21,6 +21,14 @@ class listService{
     getTodoDtoById(id){
         return axios.get(API_URL + `/tododto-by-id?id=${id}`);
     }
+
+    editList(id, newList){
+        return axios.post(API_URL + `/update-list?id=${id}`, newList);
+    }
+
+    deleteList(id){
+        return axios.delete(API_URL + `/delete-list?id=${id}`);
+    }
 }
 
 export default new listService();
