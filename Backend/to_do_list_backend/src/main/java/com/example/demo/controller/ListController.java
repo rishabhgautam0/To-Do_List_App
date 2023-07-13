@@ -35,6 +35,12 @@ public class ListController {
 		return new ResponseEntity<>(listService.findAllToDosById(id), HttpStatus.OK);
 	}
 	
+	@GetMapping("/tododto-by-id")
+	ResponseEntity<?> getAllTodoDtoById(@RequestParam Long id){
+		System.out.println("In tododto-by-id controller");
+		return new ResponseEntity<>(listService.findAllTodoTask(id), HttpStatus.OK);
+	}
+	
 	@PostMapping("/add-list")
 	ResponseEntity<?> addNewList(@RequestParam Long id, @RequestBody TodoDTO todoDto){
 		log.info(todoDto.getTitle() + " Task List: " + todoDto.getTasks() + "UserId" + id);

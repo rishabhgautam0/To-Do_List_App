@@ -40,6 +40,25 @@ public class ListServiceImpl implements ListService{
 	public List<ToDos> findAllToDosById(Long userId) {
 		return userRep.findByUserId(userId);
 	}
+	
+
+	@Override
+	public List<TodoDTO> findAllTodoTask(Long userId) {
+		User user = userRep.findById(userId).orElseThrow(() -> new UserNotFoundException("User not found!"));
+		List<ToDos> listTodos = new ArrayList<ToDos>();
+		listTodos = findAllToDosById(userId);
+		List<TodoDTO> listToDoDto = new ArrayList<TodoDTO>(); 
+		for(ToDos t : listTodos) {
+			List<Tasks> taskList = listRep.findByListId(t.getToDoListId());
+			TodoDTO tod = new TodoDTO();
+			tod.setTitle(t.getToDoList());
+			tod.setTasks(taskList);
+			listToDoDto.add(tod);
+			System.out.println("Title in tod:"+ tod.getTitle() + "task in tdodto: "+ tod.getTasks().size());
+		}
+		System.out.println("ToDTO object is:" + listToDoDto.size());
+		return listToDoDto;
+	}
 
 	@Override
 	public String addList(TodoDTO toDoObj, Long userId) {
@@ -106,13 +125,6 @@ public class ListServiceImpl implements ListService{
 		
 		
 	}
-
-
-
-	
-	
-
-
 
 	
 

@@ -17,6 +17,10 @@ class listService{
     getTodosById(id){
         return axios.get(API_URL + `/todos-by-id?id=${id}`);
     }
+
+    getTodoDtoById(id){
+        return axios.get(API_URL + `/tododto-by-id?id=${id}`);
+    }
 }
 
 export default new listService();
