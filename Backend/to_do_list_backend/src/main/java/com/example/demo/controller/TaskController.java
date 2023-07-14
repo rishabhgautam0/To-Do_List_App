@@ -51,5 +51,15 @@ public class TaskController {
 		return new ResponseEntity<>(taskService.deleteTask(id), HttpStatus.OK);
 	}
 	
+	@PostMapping("/mark-todo-true")
+	ResponseEntity<?> setMarkTrueTask(@RequestParam Long id){
+		return new ResponseEntity<>(taskService.markTaskTrue(id), HttpStatus.OK);
+	}
+	
+	@PostMapping("/mark-todo-false")
+	ResponseEntity<?> setMarkFalseTask(@RequestParam Long id){
+		return new ResponseEntity<>(taskService.markTaskFalse(id), HttpStatus.OK);
+	}
+	
 	
 }

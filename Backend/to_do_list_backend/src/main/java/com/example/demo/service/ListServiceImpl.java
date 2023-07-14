@@ -53,6 +53,7 @@ public class ListServiceImpl implements ListService{
 			TodoDTO tod = new TodoDTO();
 			tod.setTodoId(t.getToDoListId());
 			tod.setTitle(t.getToDoList());
+			tod.setListMarked(false);
 			tod.setTasks(taskList);
 			listToDoDto.add(tod);
 			System.out.println("Title in tod:"+ tod.getTitle() + "task in tdodto: "+ tod.getTasks().size());
@@ -112,7 +113,7 @@ public class ListServiceImpl implements ListService{
 	public String deleteList(Long id) {
 		if(listRep.existsById(id)) {
 			System.out.println("inside deletelist and todo exitsts");
-			listRep.deleteById(id);
+			listRep.deleteListById(id);
 			return "Success!";
 		}
 		else {
@@ -127,6 +128,22 @@ public class ListServiceImpl implements ListService{
 //		return "failed";
 		
 		
+	}
+
+	@Override
+	public String markTodoTrue(Long id) {
+		ToDos todo = listRep.findById(id).orElseThrow(() -> new ListIdNotFoundException("List not found!"));
+//		System.out.println("Todo id fetched: " + todo.getToDoListId());
+		todo.setListMarked(true);
+		return "Success!";
+	}
+	
+	@Override
+	public String markTodoFalse(Long id) {
+		ToDos todo = listRep.findById(id).orElseThrow(() -> new ListIdNotFoundException("List not found!"));
+//		System.out.println("Todo id fetched: " + todo.getToDoListId());
+		todo.setListMarked(false);
+		return "Success!";
 	}
 
 	

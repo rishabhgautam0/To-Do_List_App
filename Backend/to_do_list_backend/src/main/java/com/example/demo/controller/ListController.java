@@ -56,5 +56,15 @@ public class ListController {
 	ResponseEntity<?> deleteList(@RequestParam Long id){
 		return new ResponseEntity<>(listService.deleteList(id), HttpStatus.OK);
 	}
+	
+	@PostMapping("/mark-todo-true")
+	ResponseEntity<?> setMarkTrueTodo(@RequestParam Long id){
+		return new ResponseEntity<>(listService.markTodoTrue(id), HttpStatus.OK);
+	}
+	
+	@PostMapping("/mark-todo-false")
+	ResponseEntity<?> setMarkFalseTodo(@RequestParam Long id){
+		return new ResponseEntity<>(listService.markTodoFalse(id), HttpStatus.OK);
+	}
 
 }

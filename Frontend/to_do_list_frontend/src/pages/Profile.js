@@ -77,7 +77,7 @@ const Profile = () => {
     setNewTask((prevState) => {
       return { ...prevState, [name]: value };
     });
-    console.log(newTodo);
+    // console.log(newTodo);
   }
 
   const editTodo = (e, id) => {
@@ -100,6 +100,27 @@ const Profile = () => {
     e.preventDefault();
 
     TaskService.deleteTask(id);
+  }
+
+  var count = 0; 
+  const markUnmarkList = (e) => {
+    e.preventDefault();
+    count = count + 1;
+    console.log("value of count: " + count);
+    console.log("value of count %: " + count%2);
+    var todoButton = document.querySelector(".todo");
+    
+    ((count%2 ) == 0) ? ( todoButton.style.textDecoration = 'none' ) : ( todoButton.style.textDecoration = 'line-through' );
+  }
+  var count = 0; 
+  const markUnmarkTask = (e) => {
+    e.preventDefault();
+    count = count + 1;
+    console.log("value of count: " + count);
+    console.log("value of count %: " + count%2);
+    var taskButton = document.querySelector(".task");
+    
+    ((count%2 ) == 0) ? ( taskButton.style.textDecoration = 'none' ) : ( taskButton.style.textDecoration = 'line-through' );
   }
 
 
@@ -125,11 +146,11 @@ const Profile = () => {
             )}
             <div >
               {todoDto.map((item, index) => (
-                <div key={item.id}>
+                <div key={item.todoId}>
                   <div className='card'>
-                    To do: {item.title}
+                    To do: <button className='todo' onClick={ (e) => { markUnmarkList(e)} }>{item.title}</button>
 
-                    {/* {console.log("TodoDto id is: " + item.dtoId)} */}
+                    {console.log("TodoDto id is: " + item.todoId)}
 
                     <button className='profile-btn' onClick={showNewTodoInput}>< FiEdit3 /></button>
                     <button className='profile-btn' onClick={(e) => { deleteTodo(e, item.todoId)} }><MdDeleteForever /></button>
@@ -145,7 +166,7 @@ const Profile = () => {
                       <ul>
                         {item.tasks.map((item2, taskId) => (
 
-                          <li key={taskId}>{item2.task}
+                          <li key={taskId}><button className='task' onClick={ (e) => { markUnmarkTask(e)} }>{item2.task}</button>
                             {console.log("Task Id is " + item2.taskId)}
 
                             <button className='profile-btn' onClick={showNewTaskInput}>< FiEdit3 /></button>

@@ -18,4 +18,8 @@ public interface ListService {
 	List<ToDos> findAllToDosById(Long id);
 	
 	List<TodoDTO> findAllTodoTask(Long id);
+	
+	String markTodoTrue(Long id);
+	
+	String markTodoFalse(Long id);
 }

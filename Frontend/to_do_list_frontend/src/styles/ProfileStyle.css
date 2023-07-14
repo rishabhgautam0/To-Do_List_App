@@ -109,13 +109,22 @@ form textarea {
     visibility: hidden;
 }
 
+.todo{
+    border-radius: 10px;
+}
+
+.task{
+    padding: 0 5px 0;
+    border-radius: 10px;
+}
+
 ul li {
     margin-left: 20px;
     list-style: circle;
     font-size: 17px;
     padding: 12px auto 50px;
     user-select: none;
-    cursor: pointer;
+    /* cursor: pointer; */
     position: relative;
 }
 

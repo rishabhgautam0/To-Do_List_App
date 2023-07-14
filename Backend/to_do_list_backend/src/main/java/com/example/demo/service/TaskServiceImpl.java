@@ -60,13 +60,27 @@ public class TaskServiceImpl implements TaskService{
 	public String deleteTask(Long id) {
 		System.out.println("In delete task service");
 		if(taskRep.existsById(id)) {
-			taskRep.deleteById(id);
+			taskRep.deleteTaskById(id);
 			return "Success!";
 		}
 		else {
 			throw new TaskNotFoundException("Task Not Found!");
 		}
 		
+	}
+
+	@Override
+	public String markTaskTrue(Long id) {
+		Tasks taskObj = taskRep.findById(id).orElseThrow(() -> new TaskNotFoundException("Task not found!"));
+		taskObj.setTaskMarked(true);;
+		return "Success!";
+	}
+
+	@Override
+	public String markTaskFalse(Long id) {
+		Tasks taskObj = taskRep.findById(id).orElseThrow(() -> new TaskNotFoundException("Task not found!"));
+		taskObj.setTaskMarked(false);;
+		return "Success!";
 	}
 
 	

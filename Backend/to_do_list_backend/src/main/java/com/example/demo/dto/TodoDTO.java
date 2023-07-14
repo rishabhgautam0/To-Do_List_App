@@ -19,6 +19,8 @@ public class TodoDTO {
 	
 	private String title;
 	
+	private boolean isListMarked;
+	
 	private List<Tasks> tasks;
 
 		

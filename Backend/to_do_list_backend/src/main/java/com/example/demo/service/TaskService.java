@@ -15,5 +15,9 @@ public interface TaskService {
 	List<Tasks> findAllTasks();
 	
 	List<Tasks> findTasksById(Long todoId);
+	
+	String markTaskTrue(Long id);
+	
+	String markTaskFalse(Long id);
 
 }
