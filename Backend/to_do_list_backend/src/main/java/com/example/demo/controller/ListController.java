@@ -48,8 +48,9 @@ public class ListController {
 	}
 	
 	@PostMapping("/update-list")
-	ResponseEntity<?> updateList(@RequestParam Long id, @RequestBody String newList){
-		return new ResponseEntity<>(listService.editList(id, newList), HttpStatus.OK);
+	ResponseEntity<?> updateList( @RequestBody TodoDTO dto){
+		System.out.println("In Update List controller");
+		return new ResponseEntity<>(listService.editList(dto), HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/delete-list")

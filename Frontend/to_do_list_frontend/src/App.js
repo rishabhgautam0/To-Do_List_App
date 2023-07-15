@@ -7,6 +7,7 @@ import Background from "./components/Background";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import AddList from "./pages/AddList";
+import { EditForm } from "./pages/EditForm";
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
         <Route path="/login" element={<Login />}></Route>
         <Route path="/signup" element={<Signup />}></Route>
         <Route path="/list/add-list" element={<AddList />}></Route>
+        <Route path="/edit_todo/:id" element={<EditForm />}></Route>
       </Routes>
     </div>
   );

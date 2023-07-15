@@ -52,20 +52,18 @@ public class TaskServiceImpl implements TaskService{
 	
 			Tasks taskObj = taskRep.findById(id).orElseThrow(() -> new TaskNotFoundException("Task not found!"));
 			taskObj.setTask(newTask);
+			taskRep.save(taskObj);
 			return "Success!";
 		
 	}
 
 	@Override
-	public String deleteTask(Long id) {
+	public String deleteTaskList(Long todoId) {
 		System.out.println("In delete task service");
-		if(taskRep.existsById(id)) {
-			taskRep.deleteTaskById(id);
+		
+			taskRep.deleteTasksByTodoId(todoId);
 			return "Success!";
-		}
-		else {
-			throw new TaskNotFoundException("Task Not Found!");
-		}
+		
 		
 	}
 

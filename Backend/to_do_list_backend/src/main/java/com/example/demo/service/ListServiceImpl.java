@@ -2,7 +2,6 @@ package com.example.demo.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +12,7 @@ import com.example.demo.entity.Tasks;
 import com.example.demo.entity.ToDos;
 import com.example.demo.entity.User;
 import com.example.demo.exception.ListIdNotFoundException;
+import com.example.demo.exception.TaskNotFoundException;
 import com.example.demo.exception.UserNotFoundException;
 import com.example.demo.repository.ListRepo;
 import com.example.demo.repository.TaskRepo;
@@ -30,6 +30,9 @@ public class ListServiceImpl implements ListService{
 	
 	@Autowired
 	private TaskRepo taskRep;
+	
+	@Autowired
+	private TaskService taskService;
 	
 	@Override
 	public List<ToDos> findAllToDos(){
@@ -101,11 +104,25 @@ public class ListServiceImpl implements ListService{
 	}
 
 	@Override
-	public String editList(Long todoId, String newToDo) {
+	public String editList(TodoDTO dto) {
+		ToDos todo = listRep.findById(dto.getTodoId()).orElseThrow(() -> new ListIdNotFoundException("List not found!")); 
+		todo.setToDoList(dto.getTitle());
+		todo.setListMarked(dto.isListMarked());
+//		todo.setTasksList(dto.getTasks());
+		List<Tasks> taskList = dto.getTasks();
+		for( Tasks t : taskList) {
+			Tasks task = taskRep.findById(t.getTaskId()).orElseThrow( () -> new TaskNotFoundException("Task not found!"));
+			System.out.println("Task id fetched inside todo is: "+ t.getTaskId());
+			task.setTask(t.getTask());
+			System.out.println("Task string fetched inside todo is: "+ t.getTask());
+			task.setTaskMarked(t.isTaskMarked());
+			System.out.println("Task marked fetched inside todo is: "+ t.isTaskMarked());
+		}
 		
-			ToDos todo = listRep.findById(todoId).orElseThrow(() -> new ListIdNotFoundException("List not found!"));
-			System.out.println("Todo id fetched: " + todo.getToDoListId());
-			todo.setToDoList(newToDo);
+		
+//			ToDos todo = listRep.findById(todoId).orElseThrow(() -> new ListIdNotFoundException("List not found!"));
+//			System.out.println("Todo id fetched: " + todo.getToDoListId());
+//			todo.setToDoList(newToDo);
 			return "Success!";
 	}
 
@@ -113,6 +130,7 @@ public class ListServiceImpl implements ListService{
 	public String deleteList(Long id) {
 		if(listRep.existsById(id)) {
 			System.out.println("inside deletelist and todo exitsts");
+			taskService.deleteTaskList(id);
 			listRep.deleteListById(id);
 			return "Success!";
 		}

@@ -101,10 +101,6 @@ form textarea {
   cursor: pointer;
 }
 
-.edit-delete{
-    align-items: center;
-}
-
 .input-field-todo{
     visibility: hidden;
 }

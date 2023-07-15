@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -45,18 +46,18 @@ public class TaskController {
 		return new ResponseEntity<>(taskService.editTask(id, newTask), HttpStatus.OK);
 	}
 	
-	@DeleteMapping("/delete-task")
-	ResponseEntity<?> deleteList(@RequestParam Long id){
-		System.out.println("In delete task controller");
-		return new ResponseEntity<>(taskService.deleteTask(id), HttpStatus.OK);
-	}
+//	@DeleteMapping("/delete-task")
+//	ResponseEntity<?> deleteList(@RequestParam Long id){
+//		System.out.println("In delete task controller");
+//		return new ResponseEntity<>(taskService.deleteTask(id), HttpStatus.OK);
+//	}
 	
-	@PostMapping("/mark-todo-true")
+	@PostMapping("/mark-task-true")
 	ResponseEntity<?> setMarkTrueTask(@RequestParam Long id){
 		return new ResponseEntity<>(taskService.markTaskTrue(id), HttpStatus.OK);
 	}
 	
-	@PostMapping("/mark-todo-false")
+	@PostMapping("/mark-task-false")
 	ResponseEntity<?> setMarkFalseTask(@RequestParam Long id){
 		return new ResponseEntity<>(taskService.markTaskFalse(id), HttpStatus.OK);
 	}

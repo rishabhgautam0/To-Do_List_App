@@ -13,7 +13,7 @@ public interface TaskRepo extends JpaRepository<Tasks, Long>{
 	ToDos findTodoIdByTaskId(Long taskId);
 	
 	@Modifying
-	@Query("delete from Tasks t where t.taskId = ?1")
-	void deleteTaskById(Long id);
+	@Query(value = "DELETE FROM tasks WHERE to_do_list_id = ?1", nativeQuery = true)
+	void deleteTasksByTodoId(Long id);
 
 }

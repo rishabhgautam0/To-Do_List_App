@@ -16,8 +16,14 @@ class TaskService{
     getTasksById(id){
         return axios.get(API_URL + `/tasks-by-id?id=${id}`);
     }
-    editTask(id, newtask){
-        return axios.post(API_URL + `/update-task?id=${id}`, newtask);
+    editTask(id, updatedTaskName){
+        console.log(updatedTaskName);
+        // const updatedTaskName = encodeURIComponent(newtask);
+        return axios.post(API_URL + `/update-task?id=${id}`, updatedTaskName, {
+            headers: {
+                'Content-Type' : 'text/plain',
+            },
+        });
     }
     deleteTask(id){
         return axios.delete(API_URL + `/delete-task?id=${id}`);

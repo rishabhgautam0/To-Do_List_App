@@ -22,8 +22,15 @@ class listService{
         return axios.get(API_URL + `/tododto-by-id?id=${id}`);
     }
 
-    editList(id, newList){
-        return axios.post(API_URL + `/update-list?id=${id}`, newList);
+    editList(todoDto){
+       
+        return axios.post(API_URL + `/update-list`, todoDto
+        // ,{
+        //     headers: {
+        //         'Content-Type' : 'application/json'
+        //     },
+        // }
+        );
     }
 
     deleteList(id){

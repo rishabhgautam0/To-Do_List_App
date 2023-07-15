@@ -9,7 +9,7 @@ public interface ListService {
 	
 	String addList(TodoDTO toDoList, Long userId);
 	
-	String editList(Long id, String newToDo);
+	String editList(TodoDTO dto);
 	
 	String deleteList(Long id);
 	
