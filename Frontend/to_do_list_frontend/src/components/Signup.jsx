@@ -7,7 +7,6 @@ import "../styles/login.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { PersonCircle } from "react-bootstrap-icons";
 
-
 const Signup = () => {
   const [user, setUser] = useState(new User());
   const [loading, setLoading] = useState(false);
@@ -26,12 +25,10 @@ const Signup = () => {
     }
   }, []);
 
-  //<input name="x" value="y" onChange=(event) => handleChange(event)>
   const handleChange = (e) => {
     const { name, value } = e.target;
 
     setUser((prevState) => {
-      //e.g: prevState ({user: x, pass: x}) + newKeyValue ({user: xy}) => ({user: xy, pass: x})
       return {
         ...prevState,
         [name]: value,
@@ -43,7 +40,6 @@ const Signup = () => {
     e.preventDefault();
 
     setSubmitted(true);
-    console.log(user);
 
     if (!user.firstName || !user.lastName || !user.password || !user.email) {
       return;

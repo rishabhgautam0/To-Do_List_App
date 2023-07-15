@@ -6,7 +6,6 @@ const API_URL = BASE_API_URL + "/list/task";
 
 class TaskService{
     saveTask(task, id){
-        console.log(id);
         return axios.post(API_URL + `/add-task?id=${id}`, task,)
     }
     getAllTask(){
@@ -17,7 +16,6 @@ class TaskService{
         return axios.get(API_URL + `/tasks-by-id?id=${id}`);
     }
     editTask(id, updatedTaskName){
-        console.log(updatedTaskName);
         // const updatedTaskName = encodeURIComponent(newtask);
         return axios.post(API_URL + `/update-task?id=${id}`, updatedTaskName, {
             headers: {

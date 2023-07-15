@@ -89,9 +89,9 @@ form textarea {
 .profile-btn{
     width: auto;
     max-width: 100px;
-    margin:5px 10px;
+    margin:20px 10px 0px;
     border-radius: 20px;
-  padding: 1px 5px;
+  padding: 5px 40px;
   font-size: 1rem;
   text-transform: uppercase;
   background: rgb(170, 232, 238);
@@ -102,7 +102,7 @@ form textarea {
 }
 
 .edit-delete{
-    align-items: center;
+    text-align: center;
 }
 
 .input-field-todo{

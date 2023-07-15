@@ -12,8 +12,6 @@ import { Role } from "../models/role";
 import "../styles/login.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-
-
 const Login = () => {
   const [user, setUser] = useState(new User("", ""));
   const [loading, setLoading] = useState(false);
@@ -73,10 +71,6 @@ const Login = () => {
       <h1 className="heading">Login</h1>
       <div className="container mt-5">
         <div className="card ml-auto mr-auto p-3 shadow-lg custom-card">
-          {/* <FontAwesomeIcon
-          icon={faUserCircle}
-          className="ms-auto me-auto user-icon"
-        /> */}
 
           <PersonCircle className="ml-auto mr-auto user-icon" />
 
