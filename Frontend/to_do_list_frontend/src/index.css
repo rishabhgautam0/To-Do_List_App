@@ -42,12 +42,27 @@ h1, h4, p, a {
   transition: 0.3s;
 }
 
+.main-video-sec{
+  /* width: 100%; */
+  /* height: 100vh; */
+}
+
 #background-video {
-  position: fixed;
+  /* position: fixed;
   right: 0;
   bottom: 0;
   min-width: 100%;
   min-height: 100%;
   opacity: 40%;
-  background-size: contain;
+  background-size: contain; */
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  left: 50%;
+  top: 50%;
+  height: 100%;
+  object-fit: cover;
+  transform: translate(-50%,-50%);
+  z-index: -1;
 }
