@@ -48,13 +48,24 @@ public class ListController {
 	}
 	
 	@PostMapping("/update-list")
-	ResponseEntity<?> updateList(@RequestParam Long id, @RequestBody String newList){
-		return new ResponseEntity<>(listService.editList(id, newList), HttpStatus.OK);
+	ResponseEntity<?> updateList( @RequestBody TodoDTO dto){
+		System.out.println("In Update List controller");
+		return new ResponseEntity<>(listService.editList(dto), HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/delete-list")
 	ResponseEntity<?> deleteList(@RequestParam Long id){
 		return new ResponseEntity<>(listService.deleteList(id), HttpStatus.OK);
+	}
+	
+	@PostMapping("/mark-todo-true")
+	ResponseEntity<?> setMarkTrueTodo(@RequestParam Long id){
+		return new ResponseEntity<>(listService.markTodoTrue(id), HttpStatus.OK);
+	}
+	
+	@PostMapping("/mark-todo-false")
+	ResponseEntity<?> setMarkFalseTodo(@RequestParam Long id){
+		return new ResponseEntity<>(listService.markTodoFalse(id), HttpStatus.OK);
 	}
 
 }

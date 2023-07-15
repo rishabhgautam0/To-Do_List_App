@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from "react-redux";
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import listService from "../services/listService";
 import TaskService from '../services/TaskService';
@@ -11,8 +11,9 @@ import { MdDeleteForever } from "react-icons/md";
 
 const Profile = () => {
 
-  const [todoDto, setTodoDto] = useState(["", []]);
-  var taskArray = [];
+  const [todoDto, setTodoDto] = useState([]);
+  const [newTodo, setNewTodo] = useState([]);
+  const [newTask, setNewTask] = useState("");
   // const [tasks, setTasks] = useState(new Tasks());
   const [errorMessage, setErrorMessage] = useState("");
   const [infoMessage, setInfoMessage] = useState("")
@@ -32,25 +33,81 @@ const Profile = () => {
         const response = await listService.getTodoDtoById(currentUser?.userId);
         const data = await response.data;
         setTodoDto(data);
+         console.log("todoDto contains: " + todoDto)
       } catch (error) {
         console.error("Error fetching data", error)
       }
     }
-    
+
     fetchDto();
+
 
   }, []);
 
-  // const fetchDto = async () => {
-  //   try {
-  //     const response = await listService.getTodoDtoById(currentUser?.userId).then((response) => {
-  //       setTodoDto(response.data);
-  //       console.log("ToDTO title: " + todoDto.title + " and tododto task: " + todoDto.tasks);
-  //       console.log("Response Data from TodoDto: " + response);
-  //     })
-  //   } catch (error) {
-  //     console.error("Error fetching data", error)
-  //   }
+
+  const showNewTodoInput = (name) => {
+    console.log(name);
+    localStorage.setItem('todoData',JSON.stringify(name));
+    navigate(`/edit_todo/${name.todoId}`)
+    
+  }
+
+  const showNewTaskInput = (name) => {
+    document.querySelector(".input-field-task").style.visibility = "visible";
+    document.getElementById("newTaskInput").value = name;
+  }
+
+  const handleTodoChange = (e) => {
+    // const { name, value } = e.target;
+    setNewTodo(e.target.value);
+    console.log(newTodo);
+  }
+  const handleTaskChange = (e) => {
+    
+    setNewTask(e.target.value);
+  }
+
+  const editTodo = (e, id) => {
+    e.preventDefault();
+
+    listService.editList(id, newTodo);
+  }
+  const editTask = (e, id) => {
+    e.preventDefault();
+
+    TaskService.editTask(id, newTask);
+  }
+
+  const deleteTodo = (e, id) => {
+    e.preventDefault();
+
+    listService.deleteList(id);
+  }
+  const deleteTask = (e, id) => {
+    e.preventDefault();
+
+    TaskService.deleteTask(id);
+  }
+
+  // var count = 0; 
+  // const markUnmarkList = (e) => {
+  //   e.preventDefault();
+  //   count = count + 1;
+  //   console.log("value of count: " + count);
+  //   console.log("value of count %: " + count%2);
+  //   var todoButton = document.querySelector(".todo");
+    
+  //   ((count%2 ) == 0) ? ( todoButton.style.textDecoration = 'none' ) : ( todoButton.style.textDecoration = 'line-through' );
+  // }
+  // var count = 0; 
+  // const markUnmarkTask = (e) => {
+  //   e.preventDefault();
+  //   count = count + 1;
+  //   console.log("value of count: " + count);
+  //   console.log("value of count %: " + count%2);
+  //   var taskButton = document.querySelector(".task");
+    
+  //   ((count%2 ) == 0) ? ( taskButton.style.textDecoration = 'none' ) : ( taskButton.style.textDecoration = 'line-through' );
   // }
 
 
@@ -76,20 +133,37 @@ const Profile = () => {
             )}
             <div >
               {todoDto.map((item, index) => (
-                <div key={item.id}>
+                <div key={item.todoId}>
                   <div className='card'>
-                    To do: {item.title}
+                 <span>To do: {item.listMarked ? <span>done</span> : <span>in progress</span>}</span>
+                    <button className='todo'>{item.title}</button>
+
+                    {console.log("TodoDto id is: " + item.todoId)}
+            
+                    {/* <button type='button' className='profile-btn' onClick={() => { showNewTodoInput(item)} } ><FiEdit3 /></button>
+                   
+                    <button className='profile-btn' onClick={(e) => { deleteTodo(e, item.todoId)} }><MdDeleteForever /></button> */}
+                    
                     {console.log(item)}
                     <br></br>
-                    Tasks: 
-                    
-                    { item.tasks ?  (
+                    Tasks:
+
+                    {item.tasks ? (
                       <ul>
-                      {item.tasks.map( (item2, taskId) => (
-                    //  {console.log(item2.taskId)}
-                      <li key={taskId}>{ item2.task }< FiEdit3/>  <MdDeleteForever /></li>
-                    ))}
-                    </ul>
+                        {item.tasks.map((item2, taskId) => (
+
+                          <li key={item2.taskId}><button className='task' /*onClick={ (e) => { markUnmarkTask(e)} } */>{item2.task}</button>
+                            {console.log("Task Id is " + item2.taskId)}
+
+                            {/* <button className='profile-btn' onClick={() => showNewTaskInput(item2.task)}>< FiEdit3 /></button>
+                            <button className='profile-btn' onClick={ (e) => { deleteTask(e, item2.taskId) } }><MdDeleteForever /></button>
+                            <div className='input-field-task'>
+                              <input type='text' id='newTaskInput' name='newTask' onChange={handleTaskChange}></input>
+                              <button className='profile-btn' onClick={(e) => editTask(e, item2.taskId)}>Save</button>
+                            </div> */}
+                          </li>
+                        ))}
+                      </ul>
 
                     )
 
@@ -99,6 +173,13 @@ const Profile = () => {
 
                       )
                     }
+
+                    <div className='edit-delete'>
+                    <button type='button' className='profile-btn' onClick={() => { showNewTodoInput(item)} } ><FiEdit3 /></button>
+                   
+                   <button className='profile-btn' onClick={(e) => { deleteTodo(e, item.todoId)} }><MdDeleteForever /></button>
+                   
+                    </div>
 
 
                   </div>

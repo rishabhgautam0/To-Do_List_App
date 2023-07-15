@@ -18,7 +18,7 @@ const AddList = () => {
   const [tasks, setTasks] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const listContainer = document.getElementById("list-container");
-  // const inputTask = document.getElementById("input-task");
+  // // const inputTask = document.getElementById("input-task");
 
   // const tasksList = [
   //   { description: 'Task 1' },
@@ -39,7 +39,6 @@ const AddList = () => {
   }
 
   const handleTaskChange = (e) => {
-
     
 
     const name = document.getElementById("input-task").value;

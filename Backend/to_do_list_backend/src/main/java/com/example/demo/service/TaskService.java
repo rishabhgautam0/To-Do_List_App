@@ -10,10 +10,14 @@ public interface TaskService {
 	
 	String editTask(Long id, String newTask);
 	
-	String deleteTask(Long id);
+	String deleteTaskList(Long id);
 	
 	List<Tasks> findAllTasks();
 	
 	List<Tasks> findTasksById(Long todoId);
+	
+	String markTaskTrue(Long id);
+	
+	String markTaskFalse(Long id);
 
 }

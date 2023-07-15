@@ -9,7 +9,7 @@ public interface ListService {
 	
 	String addList(TodoDTO toDoList, Long userId);
 	
-	String editList(Long id, String newToDo);
+	String editList(TodoDTO dto);
 	
 	String deleteList(Long id);
 	
@@ -18,4 +18,8 @@ public interface ListService {
 	List<ToDos> findAllToDosById(Long id);
 	
 	List<TodoDTO> findAllTodoTask(Long id);
+	
+	String markTodoTrue(Long id);
+	
+	String markTodoFalse(Long id);
 }
