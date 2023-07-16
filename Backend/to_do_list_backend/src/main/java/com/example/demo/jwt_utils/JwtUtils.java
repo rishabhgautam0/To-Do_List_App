@@ -22,7 +22,7 @@ import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 
 @Component
-@Slf4j
+//@Slf4j
 public class JwtUtils {
 
 	@Value("${SECRET_KEY}")
@@ -39,7 +39,7 @@ public class JwtUtils {
 	}
 	
 	public String generateJwtToken(Authentication authentication) {
-		log.info("generate jwt token" + authentication);
+//		log.info("generate jwt token" + authentication);
 		CustomUserDetails userPrincipal = (CustomUserDetails)authentication.getPrincipal();
 		
 		return Jwts.builder()
@@ -73,7 +73,7 @@ public class JwtUtils {
 												// throws exc in case of failures in verification
 			return true;
 		} catch (Exception e) {
-			log.error("Invalid JWT : " + e.getMessage());
+//			log.error("Invalid JWT : " + e.getMessage());
 		}
 
 		return false;
