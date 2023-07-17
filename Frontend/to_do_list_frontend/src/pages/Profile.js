@@ -60,7 +60,7 @@ const Profile = () => {
         {todoDto.length === 0 ? (
           <h2 className="text-center">There are no To Do's</h2>
         ) : (
-          <div className="container mx-5 my-3">
+          <div >
             <h2>Lists of To Do's are:</h2>
 
             {errorMessage && (
@@ -73,7 +73,7 @@ const Profile = () => {
             )}
             <div >
               {todoDto.map((item, index) => (
-                <div key={item.todoId}>
+                <div className='card-container' key={item.todoId}>
                   <div className='card'>
                     <span>To do: {item.listMarked ? <span>Done</span> : <span>In progress</span>}</span>
                     <button className='todo'>{item.title}</button>

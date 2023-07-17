@@ -33,6 +33,10 @@ form input, form textarea{
     width: 30px;
     margin-left: 10px;
 }
+.card-container{
+    margin: 20px;
+}
+
 .row{
     display: flex;
     align-items: center;

@@ -12,6 +12,7 @@ const AddList = () => {
   const [todoDto, setTodoDto] = useState(new TodoDto());
   const [errorMessage, setErrorMessage] = useState("");
   const listContainer = document.getElementById("list-container");
+  const taskBox = document.querySelector("#input-task");
 
   const navigate = useNavigate();
 
@@ -37,6 +38,8 @@ const AddList = () => {
     let list = document.createElement('li');
     list.innerHTML = newTask.task;
     listContainer.appendChild(list);
+
+    taskBox.value="";    
   }
 
   const addNewList = (e) => {
@@ -60,8 +63,13 @@ const AddList = () => {
       });
   }
 
+  const discard = (e) => {
+    e.preventDefault();
+    navigate("/profile");
+  }
+
   return (
-    <div>
+    <div className='card-container'>
       <h1 className='heading'>Add a To Do</h1>
       <div className='card'>
         <h2>Add To-Do List
@@ -81,6 +89,8 @@ const AddList = () => {
           <li>task2</li> */}
         </ul>
         <button className='btn' onClick={(e) => addNewList(e)}>Save</button>
+        <br></br>
+        <button className='btn' onClick={ (e) => discard(e)  }>Discard</button>
       </div>
     </div>
   )
