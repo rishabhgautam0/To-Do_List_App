@@ -45,7 +45,7 @@ export const EditForm = (props) => {
       updatedTasks[taskIndex] = { ...updatedTasks[taskIndex], task: e.target.value };
       setTasks(updatedTasks);
     }
-  
+
   };
   const handleTaskMarkChange = (e, taskId) => {
     const taskIndex = tasks.findIndex((task) => task.taskId === taskId);
@@ -72,8 +72,14 @@ export const EditForm = (props) => {
         setErrorMessage("Unexpected error!");
       });
   };
+
+  const discard = (e) => {
+    e.preventDefault();
+    navigate("/profile");
+  }
+
   return (
-    <>
+    <div className='card-container'>
 
       <div className='card'>
         <div className="edit-main">
@@ -115,11 +121,14 @@ export const EditForm = (props) => {
 
             </div>
           ))}
-          <button className="update-button" onClick={handleUpdate}>Update</button>
         </div>
+        <br></br>
+        <button className="btn" onClick={handleUpdate}>Update</button>
+        <br></br>
+        <button className='btn' onClick={(e) => discard(e)}>Discard</button>
       </div>
 
 
-    </>
+    </div>
   )
 }
